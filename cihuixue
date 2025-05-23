@@ -1,0 +1,13 @@
+import requests
+from bs4 import BeautifulSoup
+
+def weibo_hot():
+    url = 'https://s.weibo.com/top/summary'
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    hot_words = [tag.text for tag in soup.select('.td-02 a')]
+    return hot_words[:10]  # 返回实时前十热词
+
+print(weibo_hot())
+# 输出示例：['yyds', '绝绝子', 'emo文学', ...]
